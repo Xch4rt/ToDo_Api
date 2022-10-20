@@ -1,0 +1,26 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "API boilerplate for Polpo",
+      "version": "1.0.0",
+      "description": ""
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "paths": {
+      "/": {
+        "get": {
+          "tags": [
+            "Welcome"
+          ],
+          "description": "",
+          "parameters": [],
+          "responses": {}
+        }
+      }
+    }
+  }
