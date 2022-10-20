@@ -12,7 +12,7 @@ const Task = db.Task;
 
 exports.getTodoTask = asyncHandler(async(req,res) => {
     // #swagger.tags = ['ToDos']
-
+    // #swagger.description = 'Endpoint para obtener todas las tareas de un ToDo según el ID del usuario'
     const {userId} = req.body;
     const data = await ToDo.findAll({where:{user_id:userId},include:{model:Task,as:'tasks', required: true}});
     res.status(200).json({
@@ -25,7 +25,7 @@ exports.getTodo = asyncHandler(async(req,res) => {
     // #swagger.tags = ['ToDos']
 
     const {userId} = req.body;
-    const data = await ToDo.findAll({where:{user_id:userId}});
+    const data = await ToDo.findAll({where:{user_id:userId, status: true}});
     res.status(200).json({
         success: true,
         data: data
@@ -35,7 +35,7 @@ exports.getTodo = asyncHandler(async(req,res) => {
 
 exports.updateTodo = asyncHandler(async(req,res) => {
     // #swagger.tags = ['ToDos']
-
+    // #swagger.description = 'Endpoint para actualizar un ToDo'
     const {todoId, name} = req.body;
 
     const todo = await ToDo.update({name: name},{where:{id:todoId}});
@@ -49,20 +49,21 @@ exports.updateTodo = asyncHandler(async(req,res) => {
 
 exports.deleteTodo = asyncHandler(async(req,res) => {
     // #swagger.tags = ['ToDos']
-
+    // #swagger.parameters['todoId'] = {description: 'ToDo Id'}
+    // #swagger.description = 'Endpoint para eliminar un ToDo'
     const {todoId} = req.body;
 
-    const todo = await ToDo.update({status:false},{where:{id:todoId}});
-
+    await ToDo.update({status:false},{where:{id:todoId}});
+    await Task.update({status:false},{where:{todoId:todoId}});
     res.status(200).json({
         success: true,
-        msg: "ToDo Eliminado con exito",
-        data: todo
+        msg: "ToDo Eliminado con exito"
     });
 });
 
 exports.createTodo = asyncHandler(async(req, res) => {
     //#swagger.tags = ['ToDos']
+    // #swagger.description = 'Endpoint para crear un nuevo ToDo'
     const {userId, name} = req.body;
 
     const todo = await db.ToDo.create({

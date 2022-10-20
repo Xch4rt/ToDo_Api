@@ -18,7 +18,7 @@ const Token = db.Token;
 
 exports.login = asyncHandler(async(req,res) => {
     // #swagger.tags = ['Autenticación']
-
+    // #swagger.description = 'Endpoint para iniciar sesión'
     const {username, password} = req.body;
     let isValid = false;
     let token;
@@ -52,6 +52,8 @@ exports.login = asyncHandler(async(req,res) => {
 });
 
 const generateToken = async (data) => {
+  // #swagger.tags = ['Autenticación']
+  // #swagger.description = 'Funcion para crearun token'
     let token = jwt.sign({ userId: data.userId }, process.env.JWT_KEY, {
       expiresIn: process.env.JWT_EXPIRATION
     });

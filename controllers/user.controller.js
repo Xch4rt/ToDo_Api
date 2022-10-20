@@ -14,6 +14,8 @@ const Token = db.Token;
 
 
 exports.registerUser = asyncHandler(async(req,res,next) => {
+    // #swagger.tags = ['Autenticación']
+    // #swagger.description = 'Endpoint para registrar un usuario'
     let salt = 5;
     let token;
     
